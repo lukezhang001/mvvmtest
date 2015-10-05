@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="jquery.js"></script>
+    <script src="core.js"></script>
+    <script src="observer.js"></script>
+</head>
+<body>
+
+<div id='box' ao-controller="box">
+    <div style=" background: #a9ea00;" ao-css-width="w" ao-css-height="h" ao-click='click' ></div>
+    <p> 图片的尺寸 {{ w }} * {{ h }} {{ t }}  </p>
+</div>
+
+<script type="text/javascript">
+
+    var mm = MVVM.define("box", function(vm) {
+        vm.w = 150;
+        vm.h = 150;
+        vm.t ="简单测试"
+        vm.click = function() {
+            vm.w = parseFloat(vm.w) + 10;
+        }
+    })
+
+    // //节点扫描,执行绑定
+
+    MVVM.scan(document.getElementById('box'));
+
+//test observe
+    var kt={};
+    aaObserve.call(kt);
+    kt.subscribe("a",function(){console.log("trigger:a")});
+    kt.one('a',function(){console.log(this)});
+
+</script>
+</body>
+</html>
